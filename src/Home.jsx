@@ -1,6 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
+import Login from './Login';
 
 function Home() {
     return (
@@ -11,7 +12,7 @@ function Home() {
 
 
                 <div className='w-[80vw] h-[85vh] bg-slate-300 rounded-lg'>
-
+                        <Login/>
                 </div>
             </div>
         </>
