@@ -1,33 +1,23 @@
-import React from 'react'
-
-import Home from './Home'
-import Login from './Login'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Signup from './Signup'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './Login'; // Make sure the path is correct
+import Home from './Home';   // Make sure the path is correct
+import Signuppage from './Signuppage';
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path:'/',
-      element:<Home/>
-    },
-    {
-      path:'/login',
-      element:<Login/>
-    },
-    {
-      path:'/signup',
-      element:<Signup/>
-    },
-  ])
   return (
+    <Router>
+      <Routes>
+        {/* Default Route for Login */}
+        <Route path="/" element={<Login />} />
+        
+        {/* Route for Home Page */}
+        <Route path="/home" element={<Home />} />
 
-    <div>
-      <RouterProvider router={router}/>
-      {/* <Login/> */}
-     <Home/>
-    </div>
-  )
+        <Route path='/signup' element={<Signuppage/>}></Route>
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

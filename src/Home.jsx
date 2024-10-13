@@ -1,22 +1,12 @@
-import React from 'react'
-import Box from '@mui/material/Box';
-import { ThemeProvider } from '@mui/material/styles';
-import Login from './Login';
+import React from 'react';
 
 function Home() {
-    return (
-        <>
-            <h1 className='text-center text-2xl font-bold'>Be The Member of our Community</h1>
-
-            <div className='w-full h-screen bg-zinc-800 flex items-center justify-center' >
-
-
-                <div className='w-[80vw] h-[85vh] bg-slate-300 rounded-lg'>
-                        <Login/>
-                </div>
-            </div>
-        </>
-    )
+  return (
+    <div>
+      <h1>Welcome to the Home Page!</h1>
+      <p>You have successfully logged in.</p>
+    </div>
+  );
 }
 
-export default Home
+export default Home;

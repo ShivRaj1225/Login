@@ -1,60 +1,142 @@
-
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Home from './Home';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import Signup from './Signup';
-
 
 function Login() {
-  
-  // const navigate = useNavigate();
-  const [username, setUsername] = useState("Admin");
-  const [password, setPassword] = useState("Admin@123");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
 
+  const handleLogin = (e) => {
+    e.preventDefault();
 
-  const handleLogin=()=>{
-    if(username==="Admin" && password==="Admin@123"){
-      setIsLoggedIn(true);
-      setError("");
-   }
-   else{
-    // alert("Hey hey Wrong User Name or Password You Ediot !")
-    setError("Wrong Username or Password!"); 
-    setIsLoggedIn(false);
-   }
-   if (isLoggedIn) {
-   
-  }
-  
-  
-  }
+    // Retrieve user data from localStorage
+    const userData = JSON.parse(localStorage.getItem('userData'));
 
-  
+    // Check if the username and password match the stored data
+    if (userData && username === userData.name && password === userData.password) {
+      // Clear inputs
+      setUsername('');
+      setPassword('');
+      
+      // Redirect to the home page
+      navigate('/home'); // Assuming '/home' is the route to the home page
+    } else {
+      setError(true);
+      setPassword(''); // Clear password field on failed attempt
+    }
+  };
+
   return (
     <div>
-      <div className='w-[25vw] h-[50vh] bg-zinc-900 p-5 flex items-center justify-center flex-col text-green-500'>
-        <h1 className='text-2xl font-bold text-center mb-10'>Login Here</h1>
+      <div className='flex flex-col items-center justify-center p-5'>
+        <form className='bg-green-800 w-[50vw] p-8 flex flex-col gap-3 rounded-md'>
+          <h1 className='text-xl text-white font-extrabold text-center'>Login Here</h1>
+          <input 
+            type="text" 
+            placeholder='Enter username' 
+            className='p-2 rounded-md' 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)} 
+          />
+          <input 
+            type="password" 
+            placeholder='Enter Password' 
+            className='p-2 rounded-md' 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+          />
 
-        <input type="text" placeholder='Enter userame Please : ' className='p-2 m-2 rounded-md w-[17vw]' value={username} onChange={(evt) => setUsername(evt.target.value)} />
-
-        <input type="password" placeholder='Enter your Password : ' className='p-2 m-2 rounded-md w-[17vw]' value={password} onChange={(evt) => setPassword(evt.target.value)} />
-        <a href="/" >Forgot Password ?</a>
-        <button className='bg-green-500 text-black font-extrabold rounded-md mt-3 p-2 w-[17vw]' onClick={handleLogin}>Login</button>
-        {error && (
-          <Stack sx={{ width: '100%', marginTop: '1rem' }} spacing={2}>
-            <Alert severity="error">{error}</Alert>
-          </Stack>
-        )}
-        {/* <Link to="/">Login</Link> */}
+          <Link to="/signup" className='text-center text-green-500 underline'>Don't have an account?</Link>
+          <button 
+            onClick={handleLogin} 
+            className='p-2 rounded-md bg-green-950 text-white font-extrabold'>
+              LOGIN
+          </button>
+          {error && (
+            <Stack sx={{ width: '100%' }} spacing={2}>
+              <Alert variant="filled" severity="error">
+                Invalid username or password.
+              </Alert>
+            </Stack>
+          )}
+        </form>
       </div>
-
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
+// import React, { useState } from 'react'
+// import { Link, useNavigate } from 'react-router-dom'
+// import Alert from '@mui/material/Alert';
+// import Stack from '@mui/material/Stack';
 
+// function Login() {
+
+//   const [username, setUsername] = useState('')
+//   const [password , setPassword] = useState('')
+//   const [error, setError] = useState(false);
+
+//   const navigate = useNavigate();
+
+//   const handleLogin = (e) => {
+//     e.preventDefault();
+
+//     if (username === "Admin" && password === "Admin123") {
+//       // Clear inputs
+//       setUsername("");
+//       setPassword("");
+      
+//       // Redirect to the home page
+//       navigate('/home'); // Assuming '/home' is the route to the home page
+//     } else {
+//       setError(true)
+      
+//       setPassword("");
+//     }
+//   }
+
+//   return (
+//     <div>
+//       <div className='flex flex-col items-center justify-center p-5'>
+       
+//         <form className='bg-green-800 w-[50vw] p-8 flex flex-col gap-3 rounded-md'>
+//         <h1 className='text-xl text-white font-extrabold text-center'>Login Here</h1>
+//           <input 
+//             type="text" 
+//             placeholder='Enter username' 
+//             className='p-2 rounded-md' 
+//             value={username} 
+//             onChange={(e) => setUsername(e.target.value)} 
+//           />
+//           <input 
+//             type="password" 
+//             placeholder='Enter Password' 
+//             className='p-2 rounded-md' 
+//             value={password} 
+//             onChange={(e) => setPassword(e.target.value)} 
+//           />
+
+//           <Link to="/signup" className='text-center text-green-500 underline'>Don't have an account?</Link>
+//           <button 
+//             onClick={handleLogin} 
+//             className='p-2 rounded-md bg-green-950 text-white font-extrabold'>
+//               LOGIN
+//           </button>
+//           {error && (
+//           <Stack sx={{ width: '100%' }} spacing={2}>
+//             <Alert variant="filled" severity="error">
+//               Invalid username or password.
+//             </Alert>
+//           </Stack>
+//         )}
+//         </form>
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default Login;
