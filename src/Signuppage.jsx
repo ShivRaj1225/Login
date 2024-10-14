@@ -40,6 +40,8 @@ function Signuppage() {
     const [name, setName] = useState('');
     const [pass, setPass] = useState('');
     const [conpass, setConpass] = useState('');
+    const [error, setError] = useState('');
+
     const navigate = useNavigate();
 
     const handleSignup = (e) => {
@@ -68,7 +70,7 @@ function Signuppage() {
         setConpass('');
 
         // Navigate to login page or home page
-        navigate('/');
+        navigate('/', { state: { signupSuccess: true } });
     };
 
     return (
@@ -104,6 +106,10 @@ function Signuppage() {
                 >
                     Sign Up
                 </button>
+                {/* Show error message */}
+                {error && (
+                    <div className="mt-3 text-red-500">{error}</div>
+                )}
             </form>
         </div>
     );

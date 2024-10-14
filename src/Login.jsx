@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import Alert from '@mui/material/Alert';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [signupSuccess, setSignupSuccess] = useState(false);
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.signupSuccess) {
+      setSignupSuccess(true);
+      // Clear the state after displaying the message
+      window.history.replaceState({}, document.title);  // Clear location state
+    }
+  }, [location.state]);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -20,11 +31,15 @@ function Login() {
       // Clear inputs
       setUsername('');
       setPassword('');
+
+      setError(false);
       
       // Redirect to the home page
-      navigate('/home'); // Assuming '/home' is the route to the home page
+      navigate('/home', { state: { loginSuccess: true } }); // Assuming '/home' is the route to the home page
     } else {
       setError(true);
+      setSignupSuccess(false);
+
       setPassword(''); // Clear password field on failed attempt
     }
   };
@@ -55,10 +70,20 @@ function Login() {
             className='p-2 rounded-md bg-green-950 text-white font-extrabold'>
               LOGIN
           </button>
+          {/* Show error message */}
           {error && (
-            <Stack sx={{ width: '100%' }} spacing={2}>
+            <Stack sx={{ width: '100%' }} spacing={2} className="mt-3">
               <Alert variant="filled" severity="error">
                 Invalid username or password.
+              </Alert>
+            </Stack>
+          )}
+
+          {/* Show success message after signup */}
+          {signupSuccess && (
+            <Stack sx={{ width: '100%' }} spacing={2} className="mt-3">
+              <Alert variant="filled" severity="success">
+                Signup successful! Please login.
               </Alert>
             </Stack>
           )}
